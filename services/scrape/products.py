@@ -139,7 +139,7 @@ class ScrapeProductsService(IService):
 
             response_payload: Dict[str, str] = {
                 "start_page": offset,
-                "end_page": offset+limit,
+                "end_page": offset+limit-1,
                 "products": products
             }
 
