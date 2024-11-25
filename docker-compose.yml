@@ -1,0 +1,62 @@
+# docker-compose.yml
+version: '3.8'
+
+networks:
+  atlys_net:
+    driver: bridge
+
+services:
+
+  redis:
+    image: "redis:7.2-alpine"
+    command: redis-server --requirepass "test123"
+    expose:
+     - "6379"
+    ports:
+      - 6379:6379
+    networks:
+      - atlys_net
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: atlys
+      POSTGRES_PASSWORD: ATLYS12345
+      POSTGRES_DB: atlys
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - atlys_net
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A start_utils.celery worker --loglevel=info
+    networks:
+      - atlys_net
+    depends_on:
+      - redis
+      - postgres
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8007:8007"
+    networks:
+      - atlys_net
+
+    depends_on:
+      - redis
+      - celery
+      - postgres
+
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:

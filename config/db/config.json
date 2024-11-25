@@ -1,0 +1,7 @@
+{
+    "user_name": "atlys",
+    "password": "ATLYS12345",
+    "host": "postgres",
+    "port": 5432,
+    "database": "atlys"
+}
