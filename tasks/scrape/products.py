@@ -2,6 +2,8 @@ import time
 from uuid import uuid4
 import asyncio
 
+from factories.messaging import MessagingFactory
+
 from services.scrape.products import ScrapeProductsService
 
 from repositories.product import ProducRepository, Product
@@ -58,10 +60,15 @@ def scrape_products(urn: str, data: dict) -> None:
 
         count += 1
 
-    print(db_session)
-    print(db_session.__dict__)
-    return {
+    response_payload = {
         "start_page": response_payload.get("start_page"),
         "end_page": response_payload.get("end_page"),
         "count": count
     }
+
+    logger.debug("Sending webhook notification")
+    webhook_service = MessagingFactory.create_service(service_type="webhook", url="https://webhook.site/1ba193a0-9b23-4707-a0b9-f772e7f59eec")
+    _ = webhook_service.send(response_payload)
+    logger.debug("Sent webhook notification")
+    
+    return response_payload
