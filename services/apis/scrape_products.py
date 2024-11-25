@@ -30,7 +30,7 @@ class InitiateScrapeProductsService(IService):
                 data=data
             )
             response_payload: Dict[str, str] = {
-                "message": "Scraping request peocessing initiated"
+                "message": "Scraping request processing initiated"
             }
 
             return BaseResponseDTO(
