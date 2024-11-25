@@ -3,11 +3,16 @@ Setup:
 * docker compose build
 * docker compose up
 
+2. Connect to the instantiated docker postgres image via psql cli and run 
+scripts/sql/ddl/0.0.1.sql
+to create the product table into the database
 
-2. Go to https://webhook.site/ and copy your unique webhook url pass the url into the following step under callback_url parameter.
+3. Go to https://webhook.site/ and copy your unique webhook url pass the url into the following step under callback_url parameter.
 
+4. docker compose stop
+5. docker compose up
 
-3. Curl: Import the curl in postman to use the api.
+6. Curl: Import the curl in postman to use the api.
 api_params: 
 offset: start_page
 limit: number of page
