@@ -67,7 +67,7 @@ def scrape_products(urn: str, data: dict) -> None:
     }
 
     logger.debug("Sending webhook notification")
-    webhook_service = MessagingFactory.create_service(service_type="webhook", url="https://webhook.site/1ba193a0-9b23-4707-a0b9-f772e7f59eec")
+    webhook_service = MessagingFactory.create_service(service_type="webhook", url=data.get("callback_url"))
     _ = webhook_service.send(response_payload)
     logger.debug("Sent webhook notification")
     

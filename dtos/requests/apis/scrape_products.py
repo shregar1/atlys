@@ -5,3 +5,4 @@ class ScrapeProductsRequestDTO(BaseRequestDTO):
     
     offset: int
     limit: int
+    callback_url: str

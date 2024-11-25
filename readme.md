@@ -1,16 +1,26 @@
-Setup: Perform the following task to setup the server
-1. Populate the google api key in env file
-
-2. Commands: Run the following commands to setup the server
+Setup:
+1. Commands: Run the following commands to setup the server
 * docker compose build
 * docker compose up
 
-Curl: Import the curl in postman to use the api.
+
+2. Go to https://webhook.site/ and copy your unique webhook url pass the url into the following step under callback_url parameter.
 
 
-curl --location 'http://0.0.0.0:8006/apis/compliance_check' \
+3. Curl: Import the curl in postman to use the api.
+api_params: 
+offset: start_page
+limit: number of page
+callback_url: webhook_url
+
+
+curl --location 'http://0.0.0.0:8007/apis/scrape_product' \
 --header 'Content-Type: application/json' \
 --data '{
-    "reference_number": "7ee938cf-5635-4287-a0a1-6bf3846baea1",
-    "url": "https://mercury.com/"
+    "reference_number": "dcbe00e1-034c-438b-ace0-d7a7e760805d",
+    "offset": 1,
+    "limit": 5,
+    "callback_url": "https://webhook.site/0aec1fa4-141b-427f-ba64-22fc51547103"
 }'
+
+4. wait for th webhook notification arrive.
